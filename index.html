@@ -1,0 +1,174 @@
+<!-- Click overlay to start music -->
+<div id="music-overlay" style="position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(255,182,193,0.7);display:flex;align-items:center;justify-content:center;z-index:9999;">
+  <div style="text-align:center;">
+    <h2 style="color:#ff2e63;">Click anywhere to start my love letter ❤️</h2>
+    <button onclick="startLoveLetter()">🎵 Play Music & Open Letter</button>
+  </div>
+</div>
+
+<!-- Background music -->
+<audio id="bg-music" loop>
+  <source src="https://cdn.pixabay.com/download/audio/2023/03/10/audio_450549.mp3?filename=gehra-hua-from-dhurandhar-450549.mp3" type="audio/mpeg">
+</audio>
+
+<!-- Envelope -->
+<div class="envelope"></div>
+
+<!-- Letter -->
+<div class="box">
+  <h1>Happy Women's Day My Love ❤️</h1>
+  <p class="typing" id="love-text"></p>
+  <p><b>Forever yours ❤️</b></p>
+</div>
+
+<style>
+body {
+  margin: 0;
+  padding: 0;
+  background: #ffd6e0;
+  font-family: Arial, sans-serif;
+  overflow: hidden;
+}
+
+/* Envelope animation */
+.envelope {
+  width: 300px;
+  height: 200px;
+  background: #fff;
+  margin: 100px auto 0;
+  border-radius: 15px;
+  box-shadow: 0 10px 25px rgba(0,0,0,0.2);
+  position: relative;
+  transform-origin: top;
+  animation: openEnvelope 2s forwards;
+}
+.envelope:before {
+  content: "";
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  background: #ff2e63;
+  top: 0;
+  left: 0;
+  clip-path: polygon(0 0, 50% 50%, 100% 0);
+}
+@keyframes openEnvelope {
+  0% { transform: rotateX(0deg); }
+  100% { transform: rotateX(-180deg); }
+}
+
+/* Letter box */
+.box {
+  background: white;
+  padding: 40px;
+  border-radius: 20px;
+  max-width: 750px;
+  margin: 50px auto;
+  box-shadow: 0 10px 25px rgba(0,0,0,0.2);
+  position: relative;
+  z-index: 2;
+  opacity: 0;
+  animation: fadeIn 2s forwards 2s;
+}
+@keyframes fadeIn { to { opacity: 1; } }
+
+h1 { color: #ff2e63; text-align: center; }
+p { font-size: 18px; line-height: 1.7; color: #333; text-align: left; }
+.typing { border-right: .1em solid #ff2e63; white-space: pre-wrap; overflow: hidden; }
+
+/* Hearts */
+.heart {
+  position: absolute;
+  width: 20px; height: 20px;
+  background: red;
+  transform: rotate(-45deg);
+  animation: float 6s infinite linear;
+  z-index: 1;
+}
+.heart::before, .heart::after {
+  content: "";
+  position: absolute;
+  width: 20px; height: 20px;
+  background: red; border-radius: 50%;
+}
+.heart::before { top: -10px; left: 0; }
+.heart::after { left: 10px; top: 0; }
+@keyframes float { 0% { transform: translateY(0) rotate(-45deg); opacity: 1; } 100% { transform: translateY(-800px) rotate(-45deg); opacity: 0; } }
+
+/* Rose petals */
+.petal {
+  position: absolute;
+  width: 20px; height: 20px;
+  background: pink; border-radius: 50%;
+  opacity: 0.8;
+  animation: fall linear infinite;
+}
+@keyframes fall { 0% { transform: translateY(-50px) rotate(0deg); } 100% { transform: translateY(900px) rotate(360deg); } }
+
+/* Music button */
+button {
+  padding: 10px 15px;
+  font-size: 16px;
+  border-radius: 10px;
+  border: none;
+  background: #ff2e63;
+  color: white;
+  cursor: pointer;
+}
+button:hover { background: #ff4d6d; }
+
+</style>
+
+<script>
+// Music control
+let music = document.getElementById("bg-music");
+music.volume = 0.4;
+
+function startLoveLetter() {
+  music.play();
+  document.getElementById('music-overlay').style.display = 'none';
+}
+
+// Love letter text
+const letter = `Today is a special day, but I don’t need a special day to show my love. I want to remind you how important you are and how much you mean to me.
+You are the happiest part of my life and the best blessing Allah has given me. You are truly the best thing Allah has blessed me with.
+Your kindness and care show how amazing your heart is. Your happiness means everything to me.
+I will always love you sweetheart. You are my heart, my soul, my everything.
+May Allah always bless you and keep you happy.
+Happy Women's Day to the most beautiful, kind, and amazing person in my life.`;
+
+let index = 0;
+function typeLetter() {
+  if(index < letter.length){
+    document.getElementById('love-text').innerHTML += letter.charAt(index);
+    index++;
+    setTimeout(typeLetter, 40);
+  }
+}
+typeLetter();
+
+// Hearts
+function createHeart(){
+  const heart = document.createElement('div');
+  heart.classList.add('heart');
+  heart.style.left = Math.random() * window.innerWidth + 'px';
+  heart.style.animationDuration = (4 + Math.random()*3) + 's';
+  heart.style.width = heart.style.height = (10 + Math.random()*20) + 'px';
+  document.body.appendChild(heart);
+  setTimeout(() => heart.remove(), 6000);
+}
+setInterval(createHeart, 700);
+
+// Rose petals
+
+function createPetal(){
+  const petal = document.createElement('div');
+  petal.classList.add('petal');
+  petal.style.left = Math.random() * window.innerWidth + 'px';
+  petal.style.animationDuration = (4 + Math.random()*3) + 's';
+  petal.style.width = petal.style.height = (10 + Math.random()*15) + 'px';
+  document.body.appendChild(petal);
+  setTimeout(() => petal.remove(), 9000);
+}
+setInterval(createPetal, 500);
+</script>
